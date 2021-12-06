@@ -10,13 +10,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.time.Instant;
 import java.util.Date;
 
 @Service
 public class SecurityService {
   
+  private final SecurityConfiguration configuration;
+  
   @Autowired
-  private SecurityConfiguration configuration;
+  public SecurityService(SecurityConfiguration configuration) {
+    this.configuration = configuration;
+  }
   
   public void checkAuthorization(String authorization) {
     if(configuration.isEnabled()) {
