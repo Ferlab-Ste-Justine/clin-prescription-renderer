@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prescription</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <style>
+    html, body {
+       margin: 0;
+       padding: 0;
+       color: blue;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <img data-th-src="${chu}" rel="stylesheet"/>
+        <p data-th-text="${serviceRequest.resourceType}"></p>
+        <p data-th-text="${serviceRequest.id}"></p>
+        <p data-th-text="${#dates.formatISO(serviceRequest.meta.lastUpdated)}"></p>
+    </div>
+</body>
+</html>

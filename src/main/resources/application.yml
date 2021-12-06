@@ -1,0 +1,15 @@
+server:
+  port: 7999
+feign:
+  client:
+    url:
+      fhirServer: ${FHIR_SERVER_URL:http://localhost:8080/fhir/}
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: basic
+security:
+  enabled: ${SECURITY_ENABLED:true}
+  audience: ${SECURITY_AUDIENCE:account}
+  issuer: ${SECURITY_ISSUER:http://localhost:8081/auth/realms/master}
