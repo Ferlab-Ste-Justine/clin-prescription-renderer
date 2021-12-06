@@ -21,7 +21,7 @@ public class SecurityService {
   public void checkAuthorization(String authorization) {
     if(configuration.isEnabled()) {
       if (!StringUtils.hasText(authorization)) {
-        throw new SecurityException(HttpStatus.FORBIDDEN, "missing token");
+        throw new SecurityException(HttpStatus.UNAUTHORIZED, "missing token");
       }
       try {
         final String token = authorization.replace("Bearer ", "");

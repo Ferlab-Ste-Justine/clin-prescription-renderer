@@ -4,9 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-public class ResourceException extends RuntimeException {
+public class PdfException extends RuntimeException {
   
-  public ResourceException(Exception e) {
+  public PdfException(Exception e) {
     super(e);
   }
 }

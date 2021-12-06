@@ -7,13 +7,13 @@ This API generates PDF for prescriptions.
 Generate and download PDF
 ```
 
-http://localhost:7999/pdf/:serviceRequestId
+http://localhost:8080/pdf/:serviceRequestId
 ```
 In order to help the development, an endpoint is available with `dev` profile.
 It will render the prescription as an HTML page without downloading.
 ```
 
-http://localhost:7999/render/:serviceRequestId
+http://localhost:8080/render/:serviceRequestId
 ```
 
 *Note: enable `dev` profile with the following: -Dspring.profiles.active=dev*

@@ -15,9 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-
 @Profile("dev")
 @Controller
 public class DevController {
@@ -38,7 +35,7 @@ public class DevController {
   private ResourceService resourceService;
   
   @RequestMapping("/render/{serviceRequestId}")
-  public String render(final Model model, @RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String authorization ,@PathVariable String serviceRequestId) throws URISyntaxException, IOException {
+  public String render(final Model model, @RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String authorization ,@PathVariable String serviceRequestId) {
 
     final ServiceRequest serviceRequest = serviceRequestClient.getById(authorization, serviceRequestId);
 

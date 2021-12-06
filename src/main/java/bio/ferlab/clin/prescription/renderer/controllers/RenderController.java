@@ -6,7 +6,6 @@ import bio.ferlab.clin.prescription.renderer.services.PdfService;
 import bio.ferlab.clin.prescription.renderer.services.ResourceService;
 import bio.ferlab.clin.prescription.renderer.services.SecurityService;
 import bio.ferlab.clin.prescription.renderer.services.ThymeleafService;
-import com.lowagie.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -18,8 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -43,7 +40,7 @@ public class RenderController {
   private ResourceService resourceService;
   
   @RequestMapping("/pdf/{serviceRequestId}")
-  public ResponseEntity<Resource> pdf(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorization ,@PathVariable String serviceRequestId) throws IOException, DocumentException, URISyntaxException {
+  public ResponseEntity<Resource> pdf(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorization ,@PathVariable String serviceRequestId) {
     
     this.securityService.checkAuthorization(authorization);
     
