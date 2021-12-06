@@ -9,6 +9,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Lint Commits
         uses: Ferlab-Ste-Justine/action-commit-lint@v2
