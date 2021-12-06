@@ -1,10 +1,10 @@
 package bio.ferlab.clin.prescription.renderer.models;
 
+import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
+@Builder
 public class ServiceRequest {
   
   private String resourceType;

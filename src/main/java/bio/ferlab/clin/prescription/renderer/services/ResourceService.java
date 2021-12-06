@@ -21,19 +21,17 @@ public class ResourceService {
   
   private String loadResource(String resource, String mediaType){
     String base64;
-    try {
-      final String format = resource.split("\\.")[1]; // png,jpg ...
-      base64 = String.format("data:%s/%s;base64,%s", mediaType, format, convertToBase64(resource));
-    } catch (Exception e) {
-      throw new ResourceException(e);
-    }
+    final String format = resource.split("\\.")[1]; // png,jpg ...
+    base64 = String.format("data:%s/%s;base64,%s", mediaType, format, convertToBase64(resource));
     return base64;
   }
 
-  private String convertToBase64(String resource) throws IOException {
+  private String convertToBase64(String resource) {
     byte[] imageAsBytes;
     try(InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("static/" + resource)) {
       imageAsBytes = IOUtils.toByteArray(inputStream);
+    } catch (IOException | NullPointerException e) {
+      throw new ResourceException("Resource not found: " + resource);
     }
     return Base64.getEncoder().encodeToString(imageAsBytes);
   }
