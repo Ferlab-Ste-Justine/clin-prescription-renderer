@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 public class PdfException extends RuntimeException {
   
-  public PdfException(Exception e) {
-    super(e);
+  public PdfException(String message, Exception e) {
+    super(message, e);
   }
 }

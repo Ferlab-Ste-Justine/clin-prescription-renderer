@@ -16,13 +16,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 @Controller
-public class RenderController {
+public class PdfController {
   
   @Autowired
   private ThymeleafService thymeleafService;
@@ -40,7 +41,9 @@ public class RenderController {
   private ResourceService resourceService;
   
   @RequestMapping("/pdf/{serviceRequestId}")
-  public ResponseEntity<Resource> pdf(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorization ,@PathVariable String serviceRequestId) {
+  public ResponseEntity<Resource> pdf(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
+                                      @PathVariable String serviceRequestId,
+                                      @RequestParam(defaultValue = "fr") String lang) {
     
     this.securityService.checkAuthorization(authorization);
     

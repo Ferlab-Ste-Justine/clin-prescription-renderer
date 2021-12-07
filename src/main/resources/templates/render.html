@@ -15,6 +15,7 @@
 </head>
 
 <body>
+    <div th:insert="fragments/header :: header"></div>
     <div class="container">
         <img data-th-src="${chu}" rel="stylesheet"/>
         <p data-th-text="${serviceRequest.resourceType}"></p>

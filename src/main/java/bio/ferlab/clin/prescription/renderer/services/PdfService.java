@@ -1,10 +1,12 @@
 package bio.ferlab.clin.prescription.renderer.services;
 
 import bio.ferlab.clin.prescription.renderer.exceptions.PdfException;
+import com.lowagie.text.DocumentException;
 import org.springframework.stereotype.Service;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 @Service
 public class PdfService {
@@ -17,8 +19,8 @@ public class PdfService {
       renderer.layout();
       renderer.createPDF(out);
       data = out.toByteArray();
-    } catch (Exception e) {
-      throw new PdfException(e);
+    } catch (IOException | DocumentException e) {
+      throw new PdfException("Failed to generate PDF from HTML", e);
     }
     return data;
   }

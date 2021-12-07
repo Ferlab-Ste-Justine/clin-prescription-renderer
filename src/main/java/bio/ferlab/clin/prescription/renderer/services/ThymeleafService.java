@@ -14,6 +14,7 @@ public class ThymeleafService {
   public String parseTemplate(String templateName, Map<String, Object> params) {
     ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
     templateResolver.setSuffix(".html");
+    templateResolver.setPrefix("/templates/");
     templateResolver.setTemplateMode(TemplateMode.HTML);
 
     TemplateEngine templateEngine = new TemplateEngine();
@@ -22,6 +23,6 @@ public class ThymeleafService {
     Context context = new Context();
     context.setVariables(params);
 
-    return templateEngine.process("templates/" + templateName, context);
+    return templateEngine.process(templateName, context);
   }
 }

@@ -31,7 +31,7 @@ public class ResourceService {
     try(InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("static/" + resource)) {
       imageAsBytes = IOUtils.toByteArray(inputStream);
     } catch (IOException | NullPointerException e) {
-      throw new ResourceException("Resource not found: " + resource);
+      throw new ResourceException("Resource not found: " + resource, e);
     }
     return Base64.getEncoder().encodeToString(imageAsBytes);
   }

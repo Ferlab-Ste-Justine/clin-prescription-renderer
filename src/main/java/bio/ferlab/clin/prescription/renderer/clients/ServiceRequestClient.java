@@ -12,6 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public interface ServiceRequestClient {
 
   @RequestMapping(method = RequestMethod.GET, value = "/ServiceRequest/{id}", produces = "application/json")
-  ServiceRequest getById(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorization, @PathVariable("id") String postId);
+  ServiceRequest getById(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorization, @PathVariable String id);
   
 }

@@ -25,6 +25,7 @@ class ThymeleafServiceTest {
     params.put("serviceRequest", serviceRequest);
 
     String template = service.parseTemplate("test",params);
+    assertTrue(template.contains("<h1>Prescription</h1>"));
     assertTrue(template.contains("Id: <p>123</p>"));
     assertTrue(template.contains("Type: <p>ServiceRequest</p>"));
   }
