@@ -15,6 +15,7 @@
 
 <body>
 <div th:insert="fragments/header :: header"></div>
+<img data-th-src="${image}" />
 <div class="container">
     Type: <p data-th-text="${serviceRequest.resourceType}"></p>
     Id: <p data-th-text="${serviceRequest.id}"></p>

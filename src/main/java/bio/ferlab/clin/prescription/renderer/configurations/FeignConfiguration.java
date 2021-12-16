@@ -12,6 +12,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 @Configuration
 public class FeignConfiguration {
 
@@ -30,6 +33,11 @@ public class FeignConfiguration {
   @Bean
   public ErrorDecoder errorDecoder() {
     return (method, response) -> new ResponseStatusException(HttpStatus.resolve(response.status()), response.reason());
+  }
+
+  @Bean("feignExecutorService")
+  public ExecutorService executorService() {
+    return Executors.newCachedThreadPool();
   }
 
 }

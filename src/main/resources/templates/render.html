@@ -5,22 +5,54 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'/>
+
     <style>
-    html, body {
-       margin: 0;
-       padding: 0;
-       color: blue;
+    body {
+        font-family: 'Roboto', sans-serif;
+        color: #364A63;
+        background: #585c68;
+        font-size: normal;
+        margin: 0;
+        padding: 0;
+    }
+    .page {
+        background-color: white;
+        margin: 50px auto;
+        height: 210mm;
+        width: 297mm;
+    }
+    .panel {
+        border-color: #BDCADB;
+    }
+    .panel-header {
+        background-color: #DEE4ED
+    }
+    @media screen {
+        .page {
+            padding: 5mm 5mm 10mm 5mm;
+        }
+    }
+    @media print {
+    body {
+    background: white;
+  }
+        .page {
+        margin: 0 auto;
+            padding: 0mm; 
+        }
     }
     </style>
 </head>
 
 <body>
-    <div th:insert="fragments/header :: header"></div>
-    <div class="container">
-        <img data-th-src="${chu}" rel="stylesheet"/>
-        <p data-th-text="${serviceRequest.resourceType}"></p>
-        <p data-th-text="${serviceRequest.id}"></p>
-        <p data-th-text="${#dates.formatISO(serviceRequest.meta.lastUpdated)}"></p>
+    <div class="page">
+        <div th:insert="fragments/header :: header(${serviceRequest})"></div>
+        BirthDate <span th:text="${patient.birthDate}"></span>
+        Proband <span th:text="${patient.isProband}"></span>
+        Fetus <span th:text="${patient.isFetus}"></span>
+        Group <span th:text="${group.id}"></span> <span th:text="${patient.getFamilyId}"></span>
+        Members <span th:text="${members.size}"></span>
     </div>
 </body>
 </html>

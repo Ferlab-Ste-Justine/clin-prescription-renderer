@@ -1,11 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 </head>
 <body>
-<div th:fragment="header">
-  <h1>Prescription</h1>
+<div th:fragment="header(serviceRequest)" style="display: flex; flex-direction: column">
+  <div style="display: flex; flex-direction: column; align-items: center; border-bottom: 1px solid #DEE4ED">
+    <h1>RÉSEAU QUÉBÉCOIS DE DIAGNOSTIC MOLÉCULAIRE</h1>
+    <p>Requête d’analyses de l’exome</p>
+  </div>
+  <div style="display: flex; justify-content: space-between">
+  <p>Numéro de Prescription: <b><span th:text="${serviceRequest.id}"></span></b></p>
+  <p>Date (aaaa-mm-jj): <b><span th:text="${#dates.format(serviceRequest.meta.lastUpdated, 'yyyy-MM-dd')}"></span></b></p>
+  </div>
+  <div style="display: flex; justify-content: space-between">
+    <p>Analyse demandée: <b><span th:text="${serviceRequest.code.coding[0].display}"></span></b></p>
+  </div>
 </div>
 </body>
 </html>

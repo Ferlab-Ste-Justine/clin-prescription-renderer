@@ -1,14 +1,13 @@
 package bio.ferlab.clin.prescription.renderer.controllers;
 
 import bio.ferlab.clin.prescription.renderer.clients.ServiceRequestClient;
-import bio.ferlab.clin.prescription.renderer.models.ServiceRequest;
+import bio.ferlab.clin.prescription.renderer.models.Resource;
 import bio.ferlab.clin.prescription.renderer.services.PdfService;
 import bio.ferlab.clin.prescription.renderer.services.ResourceService;
 import bio.ferlab.clin.prescription.renderer.services.SecurityService;
 import bio.ferlab.clin.prescription.renderer.services.ThymeleafService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -41,13 +40,13 @@ public class PdfController {
   private ResourceService resourceService;
   
   @RequestMapping("/pdf/{serviceRequestId}")
-  public ResponseEntity<Resource> pdf(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
+  public ResponseEntity<org.springframework.core.io.Resource> pdf(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
                                       @PathVariable String serviceRequestId,
                                       @RequestParam(defaultValue = "fr") String lang) {
     
     this.securityService.checkAuthorization(authorization);
     
-    final ServiceRequest serviceRequest = serviceRequestClient.getById(authorization, serviceRequestId);
+    final Resource serviceRequest = serviceRequestClient.getById(authorization, serviceRequestId);
     
     final Map<String, Object> params = new HashMap<>();
     params.put("serviceRequest", serviceRequest);
