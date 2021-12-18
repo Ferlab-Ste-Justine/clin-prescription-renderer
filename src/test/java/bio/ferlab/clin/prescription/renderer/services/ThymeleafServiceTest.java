@@ -1,7 +1,7 @@
 package bio.ferlab.clin.prescription.renderer.services;
 
 import bio.ferlab.clin.prescription.renderer.models.Meta;
-import bio.ferlab.clin.prescription.renderer.models.Resource;
+import bio.ferlab.clin.prescription.renderer.models.ServiceRequest;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -15,11 +15,10 @@ class ThymeleafServiceTest {
   
   @Test
   void generateTemplate() {
-    final Resource serviceRequest = Resource.builder()
-        .id("123")
-        .resourceType("ServiceRequest")
-        .meta(Meta.builder().build())
-        .build();
+    final ServiceRequest serviceRequest = new ServiceRequest();
+    serviceRequest.setId("123");
+    serviceRequest.setResourceType("ServiceRequest");
+    serviceRequest.setMeta(new Meta());
     
     final Map<String, Object> params = new HashMap<>();
     params.put("image", "imagebase64data");

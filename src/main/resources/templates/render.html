@@ -38,8 +38,8 @@
     background: white;
   }
         .page {
-        margin: 0 auto;
-            padding: 0mm; 
+            display flex;
+            flex-direction: column
         }
     }
     </style>
@@ -47,12 +47,8 @@
 
 <body>
     <div class="page">
-        <div th:insert="fragments/header :: header(${serviceRequest})"></div>
-        BirthDate <span th:text="${patient.birthDate}"></span>
-        Proband <span th:text="${patient.isProband}"></span>
-        Fetus <span th:text="${patient.isFetus}"></span>
-        Group <span th:text="${group.id}"></span> <span th:text="${patient.getFamilyId}"></span>
-        Members <span th:text="${members.size}"></span>
+        <div th:insert="fragments/header :: header(${serviceRequest})"/>
+        <div th:insert="fragments/patient :: patient(${serviceRequest}, ${patient}, ${organization}, 'cas-index')"/>
     </div>
 </body>
 </html>

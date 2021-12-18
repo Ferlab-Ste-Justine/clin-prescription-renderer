@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Coding {
-  private String display;
-  private String code;
+public class Identifier {
+  private Type type;
+  private String value;
+  private Reference assigner;
 }

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<div th:fragment="patient(serviceRequest, patient, organization, type)" style="display: flex; flex-direction: column">
+    <p>PATIENT</p>
+    <span>Type de patient: <span th:text="${type}"/></span>
+    <span>NOM, prénom: <span th:text="${patient.name[0].family + ', ' + patient.name[0].given[0]}"/></span>
+    <span>DDN (aaaa-mm-jj): <span th:text="${patient.birthDate}"/></span>
+    <span>Sexe: <span th:text="#{${patient.gender}}"/></span>
+    <span>Dossier: <span th:text="${serviceRequest.dossier + ' | ' + organization.alias[0]}"/></span>
+    <span>RAMQ: <span th:text="${patient.ramq}"/></span>
+</div>
+</body>
+</html>

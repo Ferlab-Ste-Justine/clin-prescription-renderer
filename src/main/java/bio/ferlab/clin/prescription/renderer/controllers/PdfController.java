@@ -1,7 +1,7 @@
 package bio.ferlab.clin.prescription.renderer.controllers;
 
-import bio.ferlab.clin.prescription.renderer.clients.ServiceRequestClient;
-import bio.ferlab.clin.prescription.renderer.models.Resource;
+import bio.ferlab.clin.prescription.renderer.clients.FhirClient;
+import bio.ferlab.clin.prescription.renderer.models.ServiceRequest;
 import bio.ferlab.clin.prescription.renderer.services.PdfService;
 import bio.ferlab.clin.prescription.renderer.services.ResourceService;
 import bio.ferlab.clin.prescription.renderer.services.SecurityService;
@@ -15,7 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +30,7 @@ public class PdfController {
   private PdfService pdfService;
   
   @Autowired
-  private ServiceRequestClient serviceRequestClient;
+  private FhirClient fhirClient;
   
   @Autowired
   private SecurityService securityService;
@@ -41,12 +40,11 @@ public class PdfController {
   
   @RequestMapping("/pdf/{serviceRequestId}")
   public ResponseEntity<org.springframework.core.io.Resource> pdf(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
-                                      @PathVariable String serviceRequestId,
-                                      @RequestParam(defaultValue = "fr") String lang) {
+                                      @PathVariable String serviceRequestId) {
     
     this.securityService.checkAuthorization(authorization);
     
-    final Resource serviceRequest = serviceRequestClient.getById(authorization, serviceRequestId);
+    final ServiceRequest serviceRequest = fhirClient.getServiceRequestById(authorization, serviceRequestId);
     
     final Map<String, Object> params = new HashMap<>();
     params.put("serviceRequest", serviceRequest);
