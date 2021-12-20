@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<div class="panel column" th:fragment="performer(performer)">
+    <div class="panel-header bold">LABORATOIRE DE DIAGNOSTIC MOLÉCULAIRE ASSIGNÉ À CETTE REQUÊTE</div>
+    <div class="panel-body space-between">
+        <div class="column">
+            <span class="bold" th:text="${performer.name}"/>
+            <span th:text="${performer.address}"/>
+            <span>Téléphone : <span th:text="${performer.phone}"/></span>
+            <span>Fax : <span th:text="${performer.fax}"/></span>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

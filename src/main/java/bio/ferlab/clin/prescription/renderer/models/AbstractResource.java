@@ -16,6 +16,7 @@ public abstract class AbstractResource {
   public static final String IS_PROBAND = "http://fhir.cqgc.ferlab.bio/StructureDefinition/is-proband";
   public static final String IS_FETUS = "http://fhir.cqgc.ferlab.bio/StructureDefinition/is-fetus";
   public static final String FAMILY_ID = "http://fhir.cqgc.ferlab.bio/StructureDefinition/family-id";
+  public static final String RESIDENT_SUPERVISOR = "http://fhir.cqgc.ferlab.bio/StructureDefinition/resident-supervisor";
 
   private String resourceType;
   private String id;

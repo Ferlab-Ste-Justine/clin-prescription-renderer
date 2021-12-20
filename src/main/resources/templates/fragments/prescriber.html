@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<div class="panel column" th:fragment="prescriber(requester, organization, requesterRole, supervisor)">
+    <div class="panel-header bold">MEDECIN PRESCRIPTEUR</div>
+    <div class="panel-body space-between">
+        <div class="column">
+            <p class="bold" th:text="${requester.formattedName}"/>
+            <p class="bold" th:text="${supervisor.formattedName}"/>
+        </div>
+        <div class="column">
+            <span th:text="${organization.name}"/>
+            <span th:text="${requesterRole.phone}"/>
+            <span th:text="${requesterRole.email}"/>
+        </div>
+    </div>
+</div>
+</body>
+</html>

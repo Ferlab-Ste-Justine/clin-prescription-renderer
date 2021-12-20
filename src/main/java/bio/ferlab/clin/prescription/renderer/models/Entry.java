@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Entry {
+public class Entry<T extends AbstractResource> {
   private String fullUrl;
-  private Resource resource;
+  private T resource;
 }

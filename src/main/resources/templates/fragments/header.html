@@ -3,17 +3,17 @@
 <head>
 </head>
 <body>
-<div th:fragment="header(serviceRequest)" style="display: flex; flex-direction: column">
-  <div style="display: flex; flex-direction: column; align-items: center; border-bottom: 1px solid #DEE4ED">
-    <h1>RÉSEAU QUÉBÉCOIS DE DIAGNOSTIC MOLÉCULAIRE</h1>
+<div class="header column" th:fragment="header(serviceRequest)">
+  <div class="sub-header column center">
+    <h2>RÉSEAU QUÉBÉCOIS DE DIAGNOSTIC MOLÉCULAIRE</h2>
     <p>Requête d’analyses de l’exome</p>
   </div>
-  <div style="display: flex; justify-content: space-between">
-  <p>Numéro de Prescription: <b><span th:text="${serviceRequest.id}"></span></b></p>
-  <p>Date (aaaa-mm-jj): <b><span th:text="${#dates.format(serviceRequest.meta.lastUpdated, 'yyyy-MM-dd')}"></span></b></p>
+  <div class="space-between">
+    <p>Numéro de Prescription : <span class="bold" th:text="${serviceRequest.id}"/></p>
+    <p>Date (aaaa-mm-jj) : <span class="bold" th:text="${#dates.format(serviceRequest.meta.lastUpdated, 'yyyy-MM-dd')}"/></p>
   </div>
-  <div style="display: flex; justify-content: space-between">
-    <p>Analyse demandée: <b><span th:text="${serviceRequest.code.coding[0].display}"></span></b></p>
+  <div class="space-between">
+    <p>Analyse demandée : <span class="bold" th:text="${serviceRequest.code.coding[0].display}"/></p>
   </div>
 </div>
 </body>

@@ -13,10 +13,7 @@ public interface FhirClient {
 
   @RequestMapping(method = RequestMethod.GET, value = "/ServiceRequest/{id}", produces = "application/json")
   ServiceRequest getServiceRequestById(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorization, @PathVariable String id);
-
-  @RequestMapping(method = RequestMethod.GET, value = "/ServiceRequest?_id={id}&_include=ServiceRequest:patient", produces = "application/json")
-  Bundle getBundleById(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorization, @PathVariable String id);
-
+  
   @RequestMapping(method = RequestMethod.GET, value = "/Group/{id}", produces = "application/json")
   Group getGroupById(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorization, @PathVariable String id);
 
@@ -25,5 +22,11 @@ public interface FhirClient {
 
   @RequestMapping(method = RequestMethod.GET, value = "/Organization/{id}", produces = "application/json")
   Organization getOrganizationById(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorization, @PathVariable String id);
-  
+
+  @RequestMapping(method = RequestMethod.GET, value = "/Practitioner/{id}", produces = "application/json")
+  Practitioner getPractitionerById(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorization, @PathVariable String id);
+
+  @RequestMapping(method = RequestMethod.GET, value = "/PractitionerRole?practitioner={practitionerId}&organization={organizationId}", produces = "application/json")
+  Bundle<PractitionerRole> getPractitionerRole(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorization, @PathVariable String practitionerId, @PathVariable String organizationId);
+
 }

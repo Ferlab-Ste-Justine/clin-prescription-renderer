@@ -3,14 +3,23 @@
 <head>
 </head>
 <body>
-<div th:fragment="patient(serviceRequest, patient, organization, type)" style="display: flex; flex-direction: column">
-    <p>PATIENT</p>
-    <span>Type de patient: <span th:text="${type}"/></span>
-    <span>NOM, prénom: <span th:text="${patient.name[0].family + ', ' + patient.name[0].given[0]}"/></span>
-    <span>DDN (aaaa-mm-jj): <span th:text="${patient.birthDate}"/></span>
-    <span>Sexe: <span th:text="#{${patient.gender}}"/></span>
-    <span>Dossier: <span th:text="${serviceRequest.dossier + ' | ' + organization.alias[0]}"/></span>
-    <span>RAMQ: <span th:text="${patient.ramq}"/></span>
+<div class="panel column" th:fragment="patient(serviceRequest, patient, organization, type)">
+    <div class="panel-header bold">PATIENT</div>
+    <div class="panel-body space-between">
+    <div class="column">
+        <p>Type de patient : </p>
+        <p class="type bold" th:text="${type}"/>
+    </div>
+        <div class="column">
+    <p>NOM, prénom : <span class="bold" th:text="${patient.name[0].family + ', ' + patient.name[0].given[0]}"/></p>
+    <p>DDN (aaaa-mm-jj) : <span class="bold" th:text="${patient.birthDate}"/></p>
+    <p>Sexe: <span class="bold" th:text="#{${patient.gender}}"/></p>
+        </div>
+        <div class="column">
+    <p>Dossier : <span class="bold" th:text="${serviceRequest.dossier + ' | ' + organization.alias[0]}"/></p>
+    <p>RAMQ : <span class="bold" th:text="${patient.ramq}"/></p>
+            </div>
+    </div>
 </div>
 </body>
 </html>
