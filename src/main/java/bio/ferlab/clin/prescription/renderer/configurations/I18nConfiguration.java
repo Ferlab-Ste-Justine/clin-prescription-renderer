@@ -9,6 +9,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+import org.thymeleaf.spring5.messageresolver.SpringMessageResolver;
 
 import java.util.Locale;
 
@@ -40,6 +41,13 @@ public class I18nConfiguration implements WebMvcConfigurer {
     messageSource.setBasename("messages");
     messageSource.setDefaultEncoding("ISO-8859-1"); // JAVA base encoding isn't UTF-8
     return messageSource;
+  }
+  
+  @Bean
+  public SpringMessageResolver springMessageResolver(MessageSource messageSource) {
+    SpringMessageResolver resolver = new SpringMessageResolver();
+    resolver.setMessageSource(messageSource);
+    return resolver;
   }
   
 }

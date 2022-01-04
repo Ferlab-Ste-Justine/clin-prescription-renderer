@@ -12,12 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Extension {
- 
-  private String url;
-  private Boolean valueBoolean;
-  private Reference valueReference;
-  private ValueCoding valueCoding;
-  private List<Extension> extension = new ArrayList<>();
-  private ValueCodeableConcept valueCodeableConcept;
+public class ValueCodeableConcept {
+  private List<Coding> coding = new ArrayList<>();
 }

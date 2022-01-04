@@ -18,6 +18,24 @@ public class Patient extends AbstractResource {
   private String birthDate;
   private String gender;
 
+  public String getDossier() {
+    return getIdentifier("MR").map(Identifier::getValue).orElse(null);
+  }
+  
+  public String getMotherId() {
+    String id = null;
+    for (Extension ext: getExtension()) {
+      if (FAMILY_RELATION.equals(ext.getUrl())) {
+        Extension motherRelation = getExtension(ext.getExtension(), "relation")
+            .filter(e -> "NMTF".equals(e.getValueCodeableConcept().getCoding().get(0).getCode())).orElse(null);
+        if(motherRelation != null) {
+          id = getExtension(ext.getExtension(), "subject").get().getValueReference().getId();
+        }
+      }
+    }
+    return id;
+  }
+
   public boolean isProband() {
     return getExtension(IS_PROBAND).map(Extension::getValueBoolean).orElse(false);
   }

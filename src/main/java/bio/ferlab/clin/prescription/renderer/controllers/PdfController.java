@@ -26,6 +26,8 @@ import java.util.stream.Collectors;
 @Controller
 public class PdfController {
   
+  public static final String TEMPLATE = "template";
+  
   @Autowired
   private ThymeleafService thymeleafService;
   
@@ -50,37 +52,58 @@ public class PdfController {
     
     this.securityService.checkAuthorization(authorization);
 
+    final Map<String, Object> params = getDataFromFhir(authorization, serviceRequestId);
+        
+    String template = thymeleafService.parseTemplate(params.get(TEMPLATE).toString(), params);
+    byte[] pdf = pdfService.generateFromHtml(template);
+    ByteArrayResource resource = new ByteArrayResource(pdf);
+
+    return ResponseEntity.ok()
+        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + UUID.randomUUID() + ".pdf")
+        .contentLength(resource.contentLength())
+        .contentType(MediaType.APPLICATION_OCTET_STREAM)
+        .body(resource);
+  }
+  
+  public Map<String, Object> getDataFromFhir(String authorization, String serviceRequestId) {
+
     final ServiceRequest serviceRequest = fhirClient.getServiceRequestById(authorization, serviceRequestId);
     final Patient patient = fhirClient.getPatientById(authorization, serviceRequest.getSubject().getId());
 
     List<Patient> members = new ArrayList<>();
-    Organization organization = null;
-    Practitioner requester = null;
-    Practitioner supervisor = null;
-    PractitionerRole requesterRole = null;
-    Organization performer = null;
+    Organization organization;
+    Practitioner requester;
+    Practitioner supervisor;
+    PractitionerRole requesterRole;
+    Organization performer;
+    Patient mother = null;
 
     if (patient.getFamilyId() != null) {
-      // async calls
       final CompletableFuture<Group> groupFuture = serviceRequestAsyncClient.getGroupById(authorization, patient.getFamilyId());
-      final CompletableFuture<Organization> organizationFuture = serviceRequestAsyncClient.getOrganizationById(authorization, serviceRequest.getOrganizationId());
-      final CompletableFuture<Organization> performerFuture = serviceRequestAsyncClient.getOrganizationById(authorization, serviceRequest.getPerformerId());
-      final CompletableFuture<Practitioner> requesterFuture = serviceRequestAsyncClient.getPractitionerById(authorization, serviceRequest.getRequester().getId());
-      final CompletableFuture<Practitioner> supervisorFuture = serviceRequest.getSupervisorId().map(id -> serviceRequestAsyncClient.getPractitionerById(authorization, id))
-          .orElseGet(() -> CompletableFuture.completedFuture(null));
-      final CompletableFuture<Bundle<PractitionerRole>> requesterRoleFuture = serviceRequestAsyncClient.getPractitionerRole(authorization, serviceRequest.getRequester().getId(), serviceRequest.getOrganizationId());
       final List<CompletableFuture<Patient>> membersFutures = groupFuture.join().getMember().stream()
           .map(grp -> grp.getEntity().getId()).map(id -> serviceRequestAsyncClient.getPatientById(authorization, id)).collect(Collectors.toList());
-      // async join
       members.addAll(membersFutures.stream().map(CompletableFuture::join).collect(Collectors.toList()));
-      organization = organizationFuture.join();
-      performer = performerFuture.join();
-      requester = requesterFuture.join();
-      supervisor = supervisorFuture.join();
-      requesterRole = requesterRoleFuture.join().getFirst()
-          .orElseThrow(() -> new RenderException(HttpStatus.NOT_FOUND, "Requester role: " + serviceRequest.getRequester().getId()));
+    }
+    
+    if (patient.isFetus()) {
+      final CompletableFuture<Patient> motherFuture = serviceRequestAsyncClient.getPatientById(authorization, patient.getMotherId());
+      mother = motherFuture.join();
     }
 
+    final CompletableFuture<Organization> organizationFuture = serviceRequestAsyncClient.getOrganizationById(authorization, serviceRequest.getOrganizationId());
+    final CompletableFuture<Organization> performerFuture = serviceRequestAsyncClient.getOrganizationById(authorization, serviceRequest.getPerformerId());
+    final CompletableFuture<Practitioner> requesterFuture = serviceRequestAsyncClient.getPractitionerById(authorization, serviceRequest.getRequester().getId());
+    final CompletableFuture<Practitioner> supervisorFuture = serviceRequest.getSupervisorId().map(id -> serviceRequestAsyncClient.getPractitionerById(authorization, id))
+        .orElseGet(() -> CompletableFuture.completedFuture(null));
+    final CompletableFuture<Bundle<PractitionerRole>> requesterRoleFuture = serviceRequestAsyncClient.getPractitionerRole(authorization, serviceRequest.getRequester().getId(), serviceRequest.getOrganizationId());
+
+    organization = organizationFuture.join();
+    performer = performerFuture.join();
+    requester = requesterFuture.join();
+    supervisor = supervisorFuture.join();
+    requesterRole = requesterRoleFuture.join().getFirst()
+        .orElseThrow(() -> new RenderException(HttpStatus.NOT_FOUND, "Requester role: " + serviceRequest.getRequester().getId()));
+    
     final Map<String, Object> params = new HashMap<>();
     params.put("serviceRequest", serviceRequest);
     params.put("patient", patient);
@@ -91,15 +114,32 @@ public class PdfController {
     params.put("requesterRole", requesterRole);
     params.put("performer", performer);
 
-
-    String template = thymeleafService.parseTemplate("render",params);
-    byte[] pdf = pdfService.generateFromHtml(template);
-    ByteArrayResource resource = new ByteArrayResource(pdf);
-
-    return ResponseEntity.ok()
-        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + UUID.randomUUID() + ".pdf")
-        .contentLength(resource.contentLength())
-        .contentType(MediaType.APPLICATION_OCTET_STREAM)
-        .body(resource);
+    final Patient proband = members.stream().filter(Patient::isProband).findFirst().orElse(null);
+    
+    final boolean isIndex = patient.isProband() && !patient.isFetus() && members.size() < 2;
+    final boolean isIndexWithFamily = patient.isProband() && !patient.isFetus() && members.size() > 1;
+    final boolean isParentOfIndex = !patient.isProband() && proband != null && !proband.isFetus();
+    final boolean isParentOfFetus = !patient.isProband() && proband != null && proband.isFetus();
+    final boolean isFetus = patient.isFetus();
+    
+    if (isIndex) {
+      params.put(TEMPLATE, "index");
+    } else if (isIndexWithFamily) {
+      params.put(TEMPLATE, "indexWithFamily");
+    } else if (isParentOfIndex) {
+      params.put(TEMPLATE, "parentOfIndex");
+      params.put("proband", proband);
+    } else if (isParentOfFetus) {
+      params.put(TEMPLATE, "parentOfFetus");
+      params.put("fetus", proband);
+    } else if (isFetus) {
+      params.put(TEMPLATE, "fetus");
+      params.put("patient", mother);  // replace patient with mother
+      params.put("fetus", patient);
+    } else {
+      throw new RenderException(HttpStatus.NOT_FOUND, "Unknown type of template: " + serviceRequestId);
+    }
+    
+    return params;
   }
 }

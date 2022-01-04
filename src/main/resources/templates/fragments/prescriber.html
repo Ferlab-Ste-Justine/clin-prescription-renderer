@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 </head>
 <body>
@@ -7,8 +7,11 @@
     <div class="panel-header bold">MEDECIN PRESCRIPTEUR</div>
     <div class="panel-body space-between">
         <div class="column">
-            <p class="bold" th:text="${requester.formattedName}"/>
-            <p class="bold" th:text="${supervisor.formattedName}"/>
+            <p class="bold" >
+                <span th:text="${requester.formattedName}"></span>
+                <span th:if="${supervisor !=null}">&nbsp;(résident)</span>
+            </p>
+            <p th:if="${supervisor != null}" class="bold" th:text="${supervisor.formattedName}"/>
         </div>
         <div class="column">
             <span th:text="${organization.name}"/>

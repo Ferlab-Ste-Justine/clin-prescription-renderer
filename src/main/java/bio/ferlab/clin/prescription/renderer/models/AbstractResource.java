@@ -17,6 +17,7 @@ public abstract class AbstractResource {
   public static final String IS_FETUS = "http://fhir.cqgc.ferlab.bio/StructureDefinition/is-fetus";
   public static final String FAMILY_ID = "http://fhir.cqgc.ferlab.bio/StructureDefinition/family-id";
   public static final String RESIDENT_SUPERVISOR = "http://fhir.cqgc.ferlab.bio/StructureDefinition/resident-supervisor";
+  public static final String FAMILY_RELATION = "http://fhir.cqgc.ferlab.bio/StructureDefinition/family-relation";
 
   private String resourceType;
   private String id;
@@ -25,6 +26,10 @@ public abstract class AbstractResource {
   private List<Identifier> identifier = new ArrayList<>();
   
   protected Optional<Extension> getExtension(String name) {
+    return extension.stream().filter(e -> name.equals(e.getUrl())).findFirst();
+  }
+
+  protected Optional<Extension> getExtension(List<Extension> extension, String name) {
     return extension.stream().filter(e -> name.equals(e.getUrl())).findFirst();
   }
 

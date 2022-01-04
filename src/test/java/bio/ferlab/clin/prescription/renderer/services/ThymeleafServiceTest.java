@@ -3,6 +3,7 @@ package bio.ferlab.clin.prescription.renderer.services;
 import bio.ferlab.clin.prescription.renderer.models.Meta;
 import bio.ferlab.clin.prescription.renderer.models.ServiceRequest;
 import org.junit.jupiter.api.Test;
+import org.thymeleaf.messageresolver.StandardMessageResolver;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ThymeleafServiceTest {
   
-  private final ThymeleafService service = new ThymeleafService();
+  private final ThymeleafService service = new ThymeleafService(new StandardMessageResolver());
   
   @Test
   void generateTemplate() {

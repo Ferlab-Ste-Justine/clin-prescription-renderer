@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Prescription</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'/>
+
+    <style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        color: #364A63;
+        background: #585c68;
+        font-size: x-small;
+        margin: 0;
+        padding: 0;
+    }
+    p {
+        margin-block-start: 0;
+    }
+    .column {
+        display: flex; flex-direction: column;
+    }
+    .space-between {
+        display: flex; justify-content: space-between;
+    }
+    .bold {
+        font-weight: bold;
+    }
+    .center {
+        display: flex; align-items: center
+    }
+    .type {
+        border: 1px solid #DEE4ED
+    }
+    .page {
+        background-color: white;
+        margin: 50px auto;
+        width: 210mm;
+        height: 297mm;
+    }
+    .header {
+        padding: 0.5rem;
+        font-size: small;
+    }
+    .sub-header {
+        margin-left: -0.5rem;
+        margin-right: -0.5rem;
+        border-bottom: 3px solid #DEE4ED;
+        margin-bottom: 1rem;
+    }
+    .panel {
+        border: 1px solid #BDCADB;
+        border-radius: 5px;
+        margin-bottom: 1rem;
+    }
+    .panel-header {
+        padding: 0.5rem;
+        background-color: #DEE4ED
+    }
+    .panel-body {
+        padding: 0.5rem;
+    }
+    .row {
+        display: flex; flex-direction: row;
+    }
+    @media screen {
+        .page {
+            padding: 5mm 5mm 10mm 5mm;
+        }
+    }
+    @media print {
+        body {
+            background: white;
+        }
+        .page {
+           margin: 0 auto;
+        }
+    }
+    input[type="checkbox"] {
+        border: 1px solid #BDCADB;
+        border-radius: 5px;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <div th:replace="fragments/header :: header(${serviceRequest})"></div>
+        <div th:replace="fragments/patient :: patient(${serviceRequest}, ${patient}, ${organization}, 'Cas-index', false, ${proband}, ${fetus})"></div>
+        <div th:replace="fragments/prescriber :: prescriber(${requester}, ${organization}, ${requesterRole}, ${supervisor})"></div>
+
+        <div class="panel column">
+            <div class="panel-header bold">À REMPLIR PAR LE MÉDECIN PRESCRIPTEUR</div>
+            <div class="panel-body">
+                <div class="column">
+                    <p class="bold">Echantillons</p>
+                    <div class="row">
+                        <p>
+                        <label >
+                            <input type="checkbox"/>
+                            Échantillon déjà disponible au Laboratoire
+                        </label>
+                        <label >
+                            <input type="checkbox"/>
+                            Nouveau Prélèvement
+                        </label>
+                        </p>
+                    </div>
+                </div>
+                <div class="column">
+                    <p class="bold">Nature des échantillons : <span class="type">Post-natal</span></p>
+                    <div class="row">
+                        <p>
+                        <label>
+                            <input type="checkbox"/>
+                            Sang: 2ml EDTA
+                        </label>
+                        Nombre de tubes : <div th:replace="fragments/underline :: underline()"></div>
+                        </p>
+                    </div>
+                    <div class="row">
+                        <p>
+                            <label>
+                                <input type="checkbox"/>
+                                Sang: 5ml EDTA
+                            </label>
+                            Nombre de tubes : <div th:replace="fragments/underline :: underline()"></div>
+                        </p>
+                    </div>
+                    <div class="row">
+                        <p>
+                            <label>
+                                <input type="checkbox"/>
+                                Autre type d'échantillons : 
+                            </label>
+                            <div th:replace="fragments/underline :: underline()"></div>
+                        </p>
+                    </div>
+                    <div class="row">
+                        <p>
+                            Commentaire : <div th:replace="fragments/underline :: underline()"></div>
+                        </p>
+                    </div>
+                    <p class="bold">Consentement du patient</p>
+                    <div class="row">
+                        <p>
+                            <label>
+                                <input type="checkbox"/>
+                                Je confirme que le patient ou son tuteur légal a signé le formulaire de consentement pour cette demande d’analyse
+                            </label>
+                        </p>
+                    </div>
+                    <div class="row">
+                        <p>
+                            Signature du médecin prescripteur : <div th:replace="fragments/underline :: underline()"></div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel column">
+            <div class="panel-header bold">À REMPLIR PAR LE CENTRE DE PRÉLÈVEMENT</div>
+            <div class="panel-body row">
+                <div class="column">
+                    <p>Centre de prélèvement : <div th:replace="fragments/underline :: underline()"></div></p>
+                    <p>Prélèvement fait par : <div th:replace="fragments/underline :: underline()"></div></p>
+                    <p>Date du prélèvement (aaa-mm-jj) : <div th:replace="fragments/underline :: underline()"></div></p>
+                    <p>Heure de prélèvement (hh:mm): <div th:replace="fragments/underline :: underline()"></div></p>
+                </div>
+            </div>
+        </div>
+        
+        <div th:replace="fragments/performer :: performer(${performer})"></div>
+    </div>
+</body>
+</html>

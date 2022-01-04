@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Prescription</title>
     <meta charset="utf-8"/>
@@ -20,17 +20,16 @@
         margin-block-start: 0;
     }
     .column {
-    display: flex; flex-direction: column;
+        display: flex; flex-direction: column;
     }
     .space-between {
-    display: flex; justify-content: space-between;
+        display: flex; justify-content: space-between;
     }
     .bold {
-     font-weight: bold;
+        font-weight: bold;
     }
     .center {
-     display: flex;
-    align-items: center
+        display: flex; align-items: center
     }
     .type {
         border: 1px solid #DEE4ED
@@ -42,19 +41,23 @@
         height: 297mm;
     }
     .header {
-            padding: 0.5rem;
-            font-size: small;
+        padding: 0.5rem;
+        font-size: small;
     }
     .sub-header {
         margin-left: -0.5rem;
-         margin-right: -0.5rem;
+        margin-right: -0.5rem;
         border-bottom: 3px solid #DEE4ED;
         margin-bottom: 1rem;
+    }
+    .border-top {
+        border-top: 2px solid #DEE4ED;
+        padding-top: 1rem;
     }
     .panel {
         border: 1px solid #BDCADB;
         border-radius: 5px;
-                margin-bottom: 1rem;
+        margin-bottom: 1rem;
     }
     .panel-header {
         padding: 0.5rem;
@@ -64,9 +67,7 @@
         padding: 0.5rem;
     }
     .row {
-         display: flex; flex-direction: row;
-    }
-    .underline {
+        display: flex; flex-direction: row;
     }
     @media screen {
         .page {
@@ -74,18 +75,16 @@
         }
     }
     @media print {
-    body {
-    background: white;
-  }
+        body {
+            background: white;
+        }
         .page {
-            display flex;
-            flex-direction: column
+           margin: 0 auto;
         }
     }
     input[type="checkbox"] {
-         border: 1px solid #BDCADB;
+        border: 1px solid #BDCADB;
         border-radius: 5px;
-                margin-bottom: 1rem;
     }
     </style>
 </head>
@@ -93,7 +92,7 @@
 <body>
     <div class="page">
         <div th:insert="fragments/header :: header(${serviceRequest})"></div>
-        <div th:insert="fragments/patient :: patient(${serviceRequest}, ${patient}, ${organization}, 'Cas-index')"></div>
+        <div th:insert="fragments/patient :: patient(${serviceRequest}, ${patient}, ${organization}, 'Parent d\'un cas-index', true, ${proband}, ${fetus})"></div>
         <div th:insert="fragments/prescriber :: prescriber(${requester}, ${organization}, ${requesterRole}, ${supervisor})"></div>
 
         <div class="panel column">
@@ -102,6 +101,7 @@
                 <div class="column">
                     <p class="bold">Echantillons</p>
                     <div class="row">
+                        <p>
                         <label >
                             <input type="checkbox"/>
                             Échantillon déjà disponible au Laboratoire
@@ -110,6 +110,7 @@
                             <input type="checkbox"/>
                             Nouveau Prélèvement
                         </label>
+                        </p>
                     </div>
                 </div>
                 <div class="column">
@@ -175,7 +176,6 @@
                 </div>
             </div>
         </div>
-        
         
         <div th:insert="fragments/performer :: performer(${performer})"></div>
     </div>
