@@ -1,0 +1,88 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="panel column" th:fragment="preBirth()">
+    <div class="panel-header bold">À REMPLIR PAR LE MÉDECIN PRESCRIPTEUR</div>
+    <div class="panel-body">
+        <div class="column">
+            <p class="bold">Echantillons</p>
+            <div class="row">
+                <p>
+                    <label >
+                        <input type="checkbox"/>
+                        Échantillon déjà disponible au Laboratoire
+                    </label>
+                    <label >
+                        <input type="checkbox"/>
+                        Nouveau Prélèvement
+                    </label>
+                </p>
+            </div>
+        </div>
+        <div class="column">
+            <p class="bold">Nature des échantillons : <span class="type">Pré-natal</span></p>
+            <div class="row">
+                <p>
+                    <label>
+                        <input type="checkbox"/>
+                        Amniocytes :
+                    </label>
+                <div th:replace="fragments/underline :: underline()"></div>
+                Volume (ml) :
+                <div th:replace="fragments/underline :: underline()"></div>
+                <label>
+                    <input type="checkbox"/>
+                    Villosités Choriales
+                </label>
+                </p>
+            </div>
+            <div class="row">
+                <p>
+                    <label>
+                        <input type="checkbox"/>
+                        Tissu foetal :
+                    </label>
+                <div th:replace="fragments/underline :: underline()"></div>
+                </p>
+            </div>
+            <div class="row">
+                <p>
+                    <label>
+                        <input type="checkbox"/>
+                        ADN - Tissu d'origine, si autre que sang :
+                    </label>
+                <div th:replace="fragments/underline :: underline()"></div>
+                </p>
+            </div>
+            <div class="row">
+                <p>
+                    <label>
+                        <input type="checkbox"/>
+                        Autre type d'échantillon :
+                    </label>
+                <div th:replace="fragments/underline :: underline()"></div>
+                </p>
+            </div>
+            <div class="row">
+                <p>
+                    Commentaire : <div th:replace="fragments/underline :: underline()"></div>
+                </p>
+            </div>
+            <p class="bold">Consentement du patient</p>
+            <div class="row">
+                <p>
+                    <label>
+                        <input type="checkbox"/>
+                        Je confirme que le patient ou son tuteur légal a signé le formulaire de consentement pour cette demande d’analyse
+                    </label>
+                </p>
+            </div>
+            <div class="row">
+                <p>
+                    Signature du médecin prescripteur : <div th:replace="fragments/underline :: underline()"></div>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

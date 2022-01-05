@@ -39,12 +39,7 @@ public class DevController {
     final Map<String, Object> params = pdfController.getDataFromFhir(authorization, serviceRequestId);
     
     model.addAllAttributes(params);
-    // flying saucer flexbox marche pas
-    // 1102
-    // 3604
-    // 3606
-    // 3609
-    // 3611
+    
     return params.get(PdfController.TEMPLATE).toString();
   }
 

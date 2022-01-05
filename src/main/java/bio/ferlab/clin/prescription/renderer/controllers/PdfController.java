@@ -76,18 +76,17 @@ public class PdfController {
     Practitioner supervisor;
     PractitionerRole requesterRole;
     Organization performer;
-    Patient mother = null;
+    Patient mother;
+
+    Optional<CompletableFuture<Group>> groupFuture = Optional.empty();
+    Optional<CompletableFuture<Patient>> motherFuture = Optional.empty();
 
     if (patient.getFamilyId() != null) {
-      final CompletableFuture<Group> groupFuture = serviceRequestAsyncClient.getGroupById(authorization, patient.getFamilyId());
-      final List<CompletableFuture<Patient>> membersFutures = groupFuture.join().getMember().stream()
-          .map(grp -> grp.getEntity().getId()).map(id -> serviceRequestAsyncClient.getPatientById(authorization, id)).collect(Collectors.toList());
-      members.addAll(membersFutures.stream().map(CompletableFuture::join).collect(Collectors.toList()));
+      groupFuture = Optional.of(serviceRequestAsyncClient.getGroupById(authorization, patient.getFamilyId()));
     }
     
     if (patient.isFetus()) {
-      final CompletableFuture<Patient> motherFuture = serviceRequestAsyncClient.getPatientById(authorization, patient.getMotherId());
-      mother = motherFuture.join();
+      motherFuture =  Optional.of(serviceRequestAsyncClient.getPatientById(authorization, patient.getMotherId()));
     }
 
     final CompletableFuture<Organization> organizationFuture = serviceRequestAsyncClient.getOrganizationById(authorization, serviceRequest.getOrganizationId());
@@ -103,6 +102,12 @@ public class PdfController {
     supervisor = supervisorFuture.join();
     requesterRole = requesterRoleFuture.join().getFirst()
         .orElseThrow(() -> new RenderException(HttpStatus.NOT_FOUND, "Requester role: " + serviceRequest.getRequester().getId()));
+    mother = motherFuture.map(CompletableFuture::join).orElse(null);
+    groupFuture.map(CompletableFuture::join).ifPresent(grp -> {
+      final List<CompletableFuture<Patient>> membersFutures = grp.getMember().stream()
+          .map(member -> member.getEntity().getId()).map(id -> serviceRequestAsyncClient.getPatientById(authorization, id)).collect(Collectors.toList());
+      members.addAll(membersFutures.stream().map(CompletableFuture::join).collect(Collectors.toList()));
+    });
     
     final Map<String, Object> params = new HashMap<>();
     params.put("serviceRequest", serviceRequest);
@@ -137,7 +142,7 @@ public class PdfController {
       params.put("patient", mother);  // replace patient with mother
       params.put("fetus", patient);
     } else {
-      throw new RenderException(HttpStatus.NOT_FOUND, "Unknown type of template: " + serviceRequestId);
+      throw new RenderException(HttpStatus.NOT_IMPLEMENTED, "Unknown type of template: " + serviceRequestId);
     }
     
     return params;

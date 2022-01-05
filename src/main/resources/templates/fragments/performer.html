@@ -3,17 +3,29 @@
 <head>
 </head>
 <body>
-<div class="panel column" th:fragment="performer(performer)">
-    <div class="panel-header bold">LABORATOIRE DE DIAGNOSTIC MOLÉCULAIRE ASSIGNÉ À CETTE REQUÊTE</div>
-    <div class="panel-body space-between">
-        <div class="column">
-            <span class="bold" th:text="${performer.name}"/>
-            <span th:text="${performer.address}"/>
-            <span>Téléphone : <span th:text="${performer.phone}"/></span>
-            <span>Fax : <span th:text="${performer.fax}"/></span>
+    <div th:fragment="performer(performer)">
+        <div class="panel column">
+            <div class="panel-header bold">À REMPLIR PAR LE CENTRE DE PRÉLÈVEMENT</div>
+            <div class="panel-body row">
+                <div class="column">
+                    <p>Centre de prélèvement : <div th:replace="fragments/underline :: underline()"></div></p>
+                    <p>Prélèvement fait par : <div th:replace="fragments/underline :: underline()"></div></p>
+                    <p>Date du prélèvement (aaa-mm-jj) : <div th:replace="fragments/underline :: underline()"></div></p>
+                    <p>Heure de prélèvement (hh:mm): <div th:replace="fragments/underline :: underline()"></div></p>
+                </div>
+            </div>
+        </div>
+        <div class="panel column">
+            <div class="panel-header bold">LABORATOIRE DE DIAGNOSTIC MOLÉCULAIRE ASSIGNÉ À CETTE REQUÊTE</div>
+            <div class="panel-body space-between">
+                <div class="column">
+                    <span class="bold" th:text="${performer.name}"/>
+                    <span th:text="${performer.address}"/>
+                    <span>Téléphone : <span th:text="${performer.phone}"/></span>
+                    <span>Fax : <span th:text="${performer.fax}"/></span>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-
 </body>
 </html>
