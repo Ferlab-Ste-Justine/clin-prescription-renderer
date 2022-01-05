@@ -5,28 +5,43 @@
 <body>
 
 
-<div class="panel" th:fragment="patient(serviceRequest, patient, organization, type, withFamily, proband, fetus)">
+<div class="panel" th:fragment="patient(serviceRequest, patient, organization, type, withFamily, proband, fetus, isMother, isParent)">
     <div class="panel-header"><b>PATIENT</b></div>
     <div class="panel-body">
     <table>
         <tr>
             <td style="width: 20%">Type de patient :</td>
             <td style="width: 20%" class="right">Nom, prénom :</td>
-            <td style="width: 20%"><b th:text="${patient.name[0].family + ', ' + patient.name[0].given[0]}"></b></td>
+            <td style="width: 20%">
+                <b th:text="${patient.name[0].family + ', ' + patient.name[0].given[0]}"></b>
+                <span th:if="${isMother}">(mère)</span>
+            </td>
             <td style="width: 20%" class="right">Dossier : </td>
             <td style="width: 20%"><b th:text="${serviceRequest.dossier + ' | ' + organization.alias[0]}"></b></td>
         </tr>
         <tr>
-            <td><b class="type" th:text="${type}"></b></td>
+            <td>
+                <b class="type" >
+                <span th:text="${type}"></span>
+                <span th:if="${isParent && patient.gender == 'female'}">(mère)</span>
+                <span th:if="${isParent && patient.gender == 'male'}">(père)</span>
+                </b>
+            </td>
             <td class="right">DDN (aaaa-mm-jj) :</td>
-            <td ><b th:text="${patient.birthDate}"></b></td>
+            <td >
+                <b th:text="${patient.birthDate}"></b>
+                <span th:if="${isMother}">(mère)</span>
+            </td>
             <td class="right">RAMQ :</td>
             <td><b th:text="${patient.ramq}"></b></td>
         </tr>
         <tr>
             <td></td>
             <td class="right">Sexe:</td>
-            <td><b th:text="#{${patient.gender}}"></b></td>
+            <td>
+                <b th:text="#{${patient.gender}}"></b>
+                <span th:if="${isMother}">(mère)</span>
+            </td>
             <td class="right"><span th:if="${withFamily}">No de famille :</span></td>
             <td><b th:if="${withFamily}" th:text="${patient.familyId}"></b></td>
         </tr>

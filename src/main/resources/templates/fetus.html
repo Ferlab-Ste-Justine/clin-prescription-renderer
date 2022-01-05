@@ -7,7 +7,7 @@
 <body>
     <div class="page">
         <div th:replace="fragments/header :: header(${serviceRequest})"></div>
-        <div th:replace="fragments/patient :: patient(${serviceRequest}, ${patient}, ${organization}, 'Foetus', true, ${proband}, ${fetus})"></div>
+        <div th:replace="fragments/patient :: patient(${serviceRequest}, ${patient}, ${organization}, 'Foetus', true, ${proband}, ${fetus}, true, false)"></div>
         <div th:replace="fragments/prescriber :: prescriber(${requester}, ${organization}, ${requesterRole}, ${supervisor})"></div>
         <div th:replace="fragments/preBirth :: preBirth()"></div>
         <div th:replace="fragments/performer :: performer(${performer})"></div>
