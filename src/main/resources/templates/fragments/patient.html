@@ -3,51 +3,72 @@
 <head>
 </head>
 <body>
-<div class="panel column" th:fragment="patient(serviceRequest, patient, organization, type, withFamily, proband, fetus)">
-    <div class="panel-header bold">PATIENT</div>
-    <div class="panel-body column">
-        <div class="space-between">
-            <div class="column">
-                <p>Type de patient : </p>
-                <div><p class="type bold" th:text="${type}"/></div>
-            </div>
-                <div class="column">
-            <p>NOM, prénom : <span class="bold" th:text="${patient.name[0].family + ', ' + patient.name[0].given[0]}"/></p>
-            <p>DDN (aaaa-mm-jj) : <span class="bold" th:text="${patient.birthDate}"/></p>
-            <p>Sexe: <span class="bold" th:text="#{${patient.gender}}"/></p>
-                </div>
-            <div class="column">
-                <p>Dossier : <span class="bold" th:text="${serviceRequest.dossier + ' | ' + organization.alias[0]}"/></p>
-                <p>RAMQ : <span class="bold" th:text="${patient.ramq}"/></p>
-                <p th:if="${withFamily}">No de famille : <span class="bold" th:text="${patient.familyId}"/></p>
-            </div>
-        </div>
-        <div class="space-between border-top" th:if="${proband != null}">
-            <div class="column">
-                <p class="type bold">Information sur le cas-index</p>
-            </div>
-            <div class="column">
-                <p>NOM, prénom : <span class="bold" th:text="${proband.name[0].family + ', ' + proband.name[0].given[0]}"/></p>
-                <p>DDN (aaaa-mm-jj) : <span class="bold" th:text="${proband.birthDate}"/></p>
-                <p>Sexe: <span class="bold" th:text="#{${proband.gender}}"/></p>
-            </div>
-            <div class="column">
-                <p>Dossier : <span class="bold" th:text="${proband.dossier + ' | ' + organization.alias[0]}"/></p>
-                <p>RAMQ : <span class="bold" th:text="${proband.ramq}"/></p>
-            </div>
-        </div>
-        <div class="space-between border-top" th:if="${fetus != null}">
-            <div class="column">
-                <p class="type bold">Information sur le foetus</p>
-            </div>
-            <div class="column">
-                <p>Age gestationnel : <span class="bold" th:text="'N/A'"/></p>
-                <p>Sexe: <span class="bold" th:text="#{${fetus.gender}}"/></p>
-            </div>
-            <div class="column">
-                <p>&nbsp;</p>
-            </div>
-        </div>
+
+
+<div class="panel" th:fragment="patient(serviceRequest, patient, organization, type, withFamily, proband, fetus)">
+    <div class="panel-header"><b>PATIENT</b></div>
+    <div class="panel-body">
+    <table>
+        <tr>
+            <td style="width: 20%">Type de patient :</td>
+            <td style="width: 20%" class="right">Nom, prénom :</td>
+            <td style="width: 20%"><b th:text="${patient.name[0].family + ', ' + patient.name[0].given[0]}"></b></td>
+            <td style="width: 20%" class="right">Dossier : </td>
+            <td style="width: 20%"><b th:text="${serviceRequest.dossier + ' | ' + organization.alias[0]}"></b></td>
+        </tr>
+        <tr>
+            <td><b class="type" th:text="${type}"></b></td>
+            <td class="right">DDN (aaaa-mm-jj) :</td>
+            <td ><b th:text="${patient.birthDate}"></b></td>
+            <td class="right">RAMQ :</td>
+            <td><b th:text="${patient.ramq}"></b></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="right">Sexe:</td>
+            <td><b th:text="#{${patient.gender}}"></b></td>
+            <td class="right"><span th:if="${withFamily}">No de famille :</span></td>
+            <td><b th:if="${withFamily}" th:text="${patient.familyId}"></b></td>
+        </tr>
+    </table>
+    <table th:if="${proband != null}">
+        <tr>
+            <td colspan="5"><div class="separator"></div></td>
+        </tr>
+        <tr>
+            <td style="width: 20%" rowspan="3"><b>Informations sur le cas-index</b></td>
+            <td style="width: 20%" class="right">Nom, prénom :</td>
+            <td style="width: 20%"><b th:text="${proband.name[0].family + ', ' + proband.name[0].given[0]}"></b></td>
+            <td style="width: 20%" class="right">Dossier : </td>
+            <td style="width: 20%"><b th:text="${proband.dossier + ' | ' + organization.alias[0]}"></b></td>
+        </tr>
+        <tr>
+            <td class="right">DDN (aaaa-mm-jj) :</td>
+            <td ><b th:text="${proband.birthDate}"></b></td>
+            <td class="right">RAMQ :</td>
+            <td><b th:text="${proband.ramq}"></b></td>
+        </tr>
+        <tr>
+            <td class="right">Sexe:</td>
+            <td><b th:text="#{${proband.gender}}"></b></td>
+            <td class="right"></td>
+            <td></td>
+        </tr>
+    </table>
+    <table th:if="${fetus != null}">
+        <tr>
+            <td colspan="5"><div class="separator"></div></td>
+        </tr>
+        <tr>
+            <td style="width: 20%" rowspan="2"><b>Informations sur le fetus</b></td>
+            <td style="width: 20%" class="right">Age gestationnel :</td>
+            <td style="width: 60%"></td>
+        </tr>
+        <tr>
+            <td class="right">Sexe:</td>
+            <td><b th:text="#{${fetus.gender}}"></b></td>
+        </tr>
+    </table>
     </div>
 </div>
 </body>

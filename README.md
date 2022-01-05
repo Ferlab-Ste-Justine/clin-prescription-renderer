@@ -28,4 +28,9 @@ It's not possible to import external files in Thymeleaf templates due to the PDF
 Workaround is to apply the following rules:
 - all CSS must be included inside the HTML template through `<style>` tag or inline `style=""`
 - all images must be loaded via `ResourceService` as base64 string and passed as params to the Thymeleaf template
+
+## HTML/CSS
+- em/rem not supported => use px units
+- flexbox not supported => use table structures
+- avoid <p> the start/end margin can't be changed, use line-height and <br/> instead
  

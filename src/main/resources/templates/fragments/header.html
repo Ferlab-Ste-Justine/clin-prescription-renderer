@@ -3,18 +3,25 @@
 <head>
 </head>
 <body>
-<div class="header column" th:fragment="header(serviceRequest)">
-  <div class="sub-header column center">
-    <h2>RÉSEAU QUÉBÉCOIS DE DIAGNOSTIC MOLÉCULAIRE</h2>
-    <p>Requête d’analyses de l’exome</p>
-  </div>
-  <div class="space-between">
-    <p>Numéro de Prescription : <span class="bold" th:text="${serviceRequest.id}"/></p>
-    <p>Date (aaaa-mm-jj) : <span class="bold" th:text="${#dates.format(serviceRequest.meta.lastUpdated, 'yyyy-MM-dd')}"/></p>
-  </div>
-  <div class="space-between">
-    <p>Analyse demandée : <span class="bold" th:text="${serviceRequest.code.coding[0].display}"/></p>
-  </div>
+<div class="header" th:fragment="header(serviceRequest)">
+  <table>
+    <tr style="text-align: center">
+      <td colspan="2" class="title"><b>RÉSEAU QUÉBÉCOIS DE DIAGNOSTIC MOLÉCULAIRE</b></td>
+    </tr>
+    <tr style="text-align: center">
+      <td colspan="2">Requête d’analyses de l’exome</td>
+    </tr>
+    <tr>
+      <td colspan="2"><div class="separator"></div></td>
+    </tr>
+    <tr>
+      <td>Numéro de Prescription : <b th:text="${serviceRequest.id}"></b></td>
+      <td class="right">Date (aaaa-mm-jj) : <b th:text="${#dates.format(serviceRequest.meta.lastUpdated, 'yyyy-MM-dd')}"></b></td>
+    </tr>
+    <tr>
+      <td colspan="2">Analyse demandée : <b th:text="${serviceRequest.code.coding[0].display}"></b></td>
+    </tr>
+  </table>
 </div>
 </body>
 </html>
