@@ -1,6 +1,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:fragment="head()">
-    <title>Prescription</title>
+<head th:fragment="head(serviceRequest)">
+    <title th:text="${serviceRequest.id}"></title>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -91,7 +91,7 @@
         
     @page {
         size: A4;
-        margin: 0;   /*force flying saucer margin to 0 and use or padding instead*/
+        margin: 0;   /*force flying saucer margin to 0 and use our padding as margin instead*/
     }
     
     @media print {
@@ -100,7 +100,7 @@
            
         }
         .page { 
-            font-size: 12px;    /* tweaks to have same format when printing */
+            font-size: 12px;    /* tweaks to have the most equivalent HTML - PDF format */
             line-height: 16px;
             margin: 0;
             width: auto;

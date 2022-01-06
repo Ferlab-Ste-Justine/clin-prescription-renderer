@@ -59,7 +59,7 @@ public class PdfController {
     ByteArrayResource resource = new ByteArrayResource(pdf);
 
     return ResponseEntity.ok()
-        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + UUID.randomUUID() + ".pdf")
+        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + serviceRequestId + ".pdf")
         .contentLength(resource.contentLength())
         .contentType(MediaType.APPLICATION_OCTET_STREAM)
         .body(resource);
@@ -88,7 +88,7 @@ public class PdfController {
     if (patient.isFetus()) {
       motherFuture =  Optional.of(serviceRequestAsyncClient.getPatientById(authorization, patient.getMotherId()));
     }
-
+    
     final CompletableFuture<Organization> organizationFuture = serviceRequestAsyncClient.getOrganizationById(authorization, serviceRequest.getOrganizationId());
     final CompletableFuture<Organization> performerFuture = serviceRequestAsyncClient.getOrganizationById(authorization, serviceRequest.getPerformerId());
     final CompletableFuture<Practitioner> requesterFuture = serviceRequestAsyncClient.getPractitionerById(authorization, serviceRequest.getRequester().getId());

@@ -1,22 +1,17 @@
 # clin-prescription-renderer
 
-This API generates PDF for prescriptions.
+This API generates PDF of prescriptions.
 
 # Endpoints
 
-Generate and download PDF
-```
+|url|description|
+|-|-|
+|GET http://localhost:8080/pdf/:serviceRequestId?lang=fr|Generate and download PDF|
+|GET http://localhost:8080/render/:serviceRequestId?lang=fr|Render the prescription as HTML, only with *-Dspring.profiles.active=dev*|
 
-http://localhost:8080/pdf/:serviceRequestId
-```
-In order to help the development, an endpoint is available with `dev` profile.
-It will render the prescription as an HTML page without downloading.
-```
+*Note: `lang` param is optional and **fr** is the default lang.*
 
-http://localhost:8080/render/:serviceRequestId
-```
-
-*Note: enable `dev` profile with the following: -Dspring.profiles.active=dev*
+During development, it will also be easier to have the IDE in rebuild/relaunch project automatically when files change like HTML ...
 
 # Security
 
@@ -24,13 +19,10 @@ Endpoints require `Authorization` bearer token in header.
 
 # Limitations
 
-It's not possible to import external files in Thymeleaf templates due to the PDF export that won't be able to locate them.
-Workaround is to apply the following rules:
+Due to the PDF export there are some limitations and the main rule is to have standalone HTML page with no static resources to load + use basic HTML/CSS:
 - all CSS must be included inside the HTML template through `<style>` tag or inline `style=""`
 - all images must be loaded via `ResourceService` as base64 string and passed as params to the Thymeleaf template
-
-## HTML/CSS
 - em/rem not supported => use px units
 - flexbox not supported => use table structures
-- avoid <p> the start/end margin can't be changed, use line-height and <br/> instead
+- avoid `<p>` the start/end margin can't be changed, use line-height and `<br/>` instead
  
