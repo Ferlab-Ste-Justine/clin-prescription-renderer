@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head :: head(${serviceRequest})">
+</head>
+
+<body>
+    <div class="page">
+        <div th:replace="fragments/header :: header(${serviceRequest})"></div>
+        <div th:replace="fragments/patient :: patient(${serviceRequest}, ${patient}, ${organization}, 'Parent d\'un cas-index', true, ${proband}, ${fetus}, false, true)"></div>
+        <div th:replace="fragments/prescriber :: prescriber(${requester}, ${organization}, ${requesterRole}, ${supervisor})"></div>
+        <div th:replace="fragments/postBirth :: postBirth()"></div>
+        <div th:replace="fragments/performer :: performer(${performer})"></div>
+    </div>
+</body>
+</html>

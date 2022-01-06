@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div class="header" th:fragment="header(serviceRequest)">
+  <table>
+    <tr style="text-align: center">
+      <td colspan="2" class="title"><b>RÉSEAU QUÉBÉCOIS DE DIAGNOSTIC MOLÉCULAIRE</b></td>
+    </tr>
+    <tr style="text-align: center">
+      <td colspan="2">Requête d’analyses de l’exome</td>
+    </tr>
+    <tr>
+      <td colspan="2"><div class="separator"></div></td>
+    </tr>
+    <tr>
+      <td>Numéro de Prescription : <b th:text="${serviceRequest.id}"></b></td>
+      <td class="right">Date (aaaa-mm-jj) : <b th:text="${#dates.format(serviceRequest.meta.lastUpdated, 'yyyy-MM-dd')}"></b></td>
+    </tr>
+    <tr>
+      <td colspan="2">Analyse demandée : <b th:text="${serviceRequest.code.coding[0].display}"></b></td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

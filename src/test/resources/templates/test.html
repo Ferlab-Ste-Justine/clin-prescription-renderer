@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Prescription</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <style>
+    html, body {
+       margin: 0;
+       padding: 0;
+    }
+    </style>
+</head>
+
+<body>
+<div th:insert="fragments/header :: header"></div>
+<img data-th-src="${image}" />
+<div class="container">
+    Type: <p data-th-text="${serviceRequest.resourceType}"></p>
+    Id: <p data-th-text="${serviceRequest.id}"></p>
+</div>
+</body>
+</html>

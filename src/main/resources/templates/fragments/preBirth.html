@@ -1,0 +1,37 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="panel column" th:fragment="preBirth()">
+    <div class="panel-header"><b>À REMPLIR PAR LE MÉDECIN PRESCRIPTEUR</b></div>
+    <div class="panel-body">
+        <div >
+            <b>Echantillons</b>
+            <br/>
+            <input type="checkbox"/> Échantillon déjà disponible au Laboratoire
+            <input type="checkbox"/> Nouveau Prélèvement
+            <br/>
+            <br/>
+            <b>Nature des échantillons : <b class="type">Pré-natal</b></b>
+            <br/>
+            <input type="checkbox"/> Amniocytes : ________________ Volume (ml) : ________________ <input type="checkbox"/> Villosités Choriales
+            <br/>
+            <input type="checkbox"/> Tissu foetal : ________________
+            <br/>
+            <input type="checkbox"/> ADN - Tissu d'origine, si autre que sang : ________________
+            <br/>    
+            <input type="checkbox"/> Autre type d'échantillon : _________________________________
+            <br/>
+            Commentaire : __________________________________________________________________
+            <br/>
+            <br/>
+            <b>Consentement du patient</b>
+            <br/>
+            <input type="checkbox"/> Je confirme que le patient ou son tuteur légal a signé le formulaire de consentement pour cette demande d’analyse
+            <br/>
+            <br/>
+            Signature du médecin prescripteur :
+            <span>_________________________________</span>
+        </div>
+    </div>
+</div>
+</body>
+</html>

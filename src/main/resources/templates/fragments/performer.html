@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+    <div th:fragment="performer(performer)">
+        <div class="panel">
+            <div class="panel-header"><b>À REMPLIR PAR LE CENTRE DE PRÉLÈVEMENT</b></div>
+            <div class="panel-body">
+                Centre de prélèvement : __________________________________________________________________
+                <br/>
+                Prélèvement fait par : _________________________________
+                <br/>
+                Date du prélèvement (aaa-mm-jj) : _________________________________
+                <br/>
+                Heure de prélèvement (hh:mm): _________________________________
+            </div>
+        </div>
+        <div class="panel">
+            <div class="panel-header"><b>LABORATOIRE DE DIAGNOSTIC MOLÉCULAIRE ASSIGNÉ À CETTE REQUÊTE</b></div>
+            <div class="panel-body">
+                <b th:text="${performer.name}"></b>
+                <br/>
+                <span th:text="${performer.address}"></span>
+                <br/>
+                Téléphone : <span th:text="${performer.phone}"></span>
+                <br/>
+                Fax : <span th:text="${performer.fax}"></span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div class="panel" th:fragment="prescriber(requester, organization, requesterRole, supervisor)">
+    <div class="panel-header"><b>MEDECIN PRESCRIPTEUR</b></div>
+    <div class="panel-body">
+        <table>
+            <tr>
+                <td style="width: 40%">
+                    <b th:text="${requester.formattedName}"></b>
+                    &nbsp;<b th:if="${supervisor !=null}">&nbsp;(résident)</b>
+                    <br th:if="${supervisor != null}"/>
+                    <b th:if="${supervisor != null}" th:text="${supervisor.formattedName}"></b>
+                </td>
+                <td style="width: 60%">
+                    <span th:text="${organization.name}"></span>
+                    <br/>
+                    <span th:text="${requesterRole.phone}"></span>
+                    <br/>
+                    <span th:text="${requesterRole.email}"></span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>
