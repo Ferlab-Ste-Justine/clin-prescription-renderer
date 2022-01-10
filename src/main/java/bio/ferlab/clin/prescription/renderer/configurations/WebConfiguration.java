@@ -18,13 +18,15 @@ import java.util.Locale;
 @Configuration
 public class WebConfiguration implements WebMvcConfigurer {
   
+  public static final Locale DEFAULT_LOCALE = Locale.FRENCH;
+  
   @Autowired
   private SecurityConfiguration securityConfiguration;
   
   @Bean
   public LocaleResolver localeResolver() {
     SessionLocaleResolver slr = new SessionLocaleResolver();
-    slr.setDefaultLocale(Locale.FRENCH);  // it's not a mistake ... FR by default
+    slr.setDefaultLocale(DEFAULT_LOCALE);
     return slr;
   }
 
@@ -55,6 +57,7 @@ public class WebConfiguration implements WebMvcConfigurer {
     ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
     messageSource.setBasename("messages");
     messageSource.setDefaultEncoding("ISO-8859-1"); // JAVA base encoding isn't UTF-8
+    messageSource.setFallbackToSystemLocale(false);
     return messageSource;
   }
   

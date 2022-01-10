@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
@@ -48,13 +49,16 @@ public class PdfController {
   
   @RequestMapping("/pdf/{serviceRequestId}")
   public ResponseEntity<org.springframework.core.io.Resource> pdf(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
+                                      @RequestParam(required = false) String lang,
                                       @PathVariable String serviceRequestId) {
     
     this.securityService.checkAuthorization(authorization);
 
     final Map<String, Object> params = getDataFromFhir(authorization, serviceRequestId);
+    
+    final Locale locale = lang != null ? Locale.forLanguageTag(lang) : null;
         
-    String template = thymeleafService.parseTemplate(params.get(TEMPLATE).toString(), params);
+    String template = thymeleafService.parseTemplate(params.get(TEMPLATE).toString(), params, locale);
     byte[] pdf = pdfService.generateFromHtml(template);
     ByteArrayResource resource = new ByteArrayResource(pdf);
 

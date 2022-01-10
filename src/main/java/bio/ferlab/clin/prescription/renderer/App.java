@@ -1,7 +1,5 @@
 package bio.ferlab.clin.prescription.renderer;
 
-//import io.netty.channel.nio.NioEventLoopGroup;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
