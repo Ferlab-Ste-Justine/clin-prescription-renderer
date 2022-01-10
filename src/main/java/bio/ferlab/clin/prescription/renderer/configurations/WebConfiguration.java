@@ -1,5 +1,6 @@
 package bio.ferlab.clin.prescription.renderer.configurations;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +16,10 @@ import org.thymeleaf.spring5.messageresolver.SpringMessageResolver;
 import java.util.Locale;
 
 @Configuration
-public class WebConfig implements WebMvcConfigurer {
+public class WebConfiguration implements WebMvcConfigurer {
+  
+  @Autowired
+  private SecurityConfiguration securityConfiguration;
   
   @Bean
   public LocaleResolver localeResolver() {
@@ -34,7 +38,7 @@ public class WebConfig implements WebMvcConfigurer {
   @Override
   public void addCorsMappings(CorsRegistry registry) {
     registry.addMapping("/**")
-        .allowedOrigins("http://localhost:2000", "https://qa.clin.ferlab.bio", "https://staging.clin.ferlab.bio", "https://clin.ferlab.bio")
+        .allowedOrigins(securityConfiguration.getCors().toArray(String[]::new))
         .allowedMethods("GET")
         .allowedHeaders("Authorization")
         .allowCredentials(true)
