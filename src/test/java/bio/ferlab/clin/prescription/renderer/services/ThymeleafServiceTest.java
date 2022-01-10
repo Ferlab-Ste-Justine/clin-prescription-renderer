@@ -25,7 +25,7 @@ class ThymeleafServiceTest {
     params.put("image", "imagebase64data");
     params.put("serviceRequest", serviceRequest);
 
-    String template = service.parseTemplate("test",params);
+    String template = service.parseTemplate("test",params, null);
     assertTrue(template.contains("<h1>Prescription</h1>"));
     assertTrue(template.contains("<img src=\"imagebase64data\" />"));
     assertTrue(template.contains("Id: <p>123</p>"));
