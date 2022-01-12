@@ -4,17 +4,17 @@
 </head>
 <body>
 <div class="panel" th:fragment="prescriber(requester, organization, requesterRole, supervisor)">
-    <div class="panel-header"><b>MEDECIN PRESCRIPTEUR</b></div>
+    <div class="panel-header"><b>MÉDECIN PRESCRIPTEUR</b></div>
     <div class="panel-body">
         <table>
             <tr>
-                <td style="width: 40%">
+                <td style="width: 43%">
                     <b th:text="${requester.formattedName}"></b>
-                    &nbsp;<b th:if="${supervisor !=null}">&nbsp;(résident)</b>
+                    <b th:if="${supervisor !=null}">(résident)</b>
                     <br th:if="${supervisor != null}"/>
                     <b th:if="${supervisor != null}" th:text="${supervisor.formattedName}"></b>
                 </td>
-                <td style="width: 60%">
+                <td style="width: 57%">
                     <span th:text="${organization.name}"></span>
                     <br/>
                     <span th:text="${requesterRole.phone}"></span>

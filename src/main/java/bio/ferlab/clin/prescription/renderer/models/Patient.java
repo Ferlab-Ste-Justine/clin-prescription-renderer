@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Data
 @NoArgsConstructor
@@ -20,6 +21,17 @@ public class Patient extends AbstractResource {
 
   public String getDossier() {
     return getIdentifier("MR").map(Identifier::getValue).orElse(null);
+  }
+
+  public String getFormattedName() {
+    return name.stream().filter(n -> n.getFamily() != null && n.getGiven().size() > 0)
+        .findFirst().map(n -> String.format("%s, %s", n.getFamily().toUpperCase(), n.getGiven().get(0))).orElse(null); 
+  }
+  
+  public String getFormattedRamq() {
+    return Optional.ofNullable(getRamq())
+        .map(r -> String.format("%s %s %s", r.substring(0,4), r.substring(4,8), r.substring(8,12)))
+        .orElse(null);
   }
   
   public String getMotherId() {

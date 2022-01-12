@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,7 +57,7 @@ public class PdfController {
 
     final Map<String, Object> params = getDataFromFhir(authorization, serviceRequestId);
     
-    final Locale locale = lang != null ? Locale.forLanguageTag(lang) : null;
+    final Locale locale = StringUtils.parseLocaleString(lang);
         
     String template = thymeleafService.parseTemplate(params.get(TEMPLATE).toString(), params, locale);
     byte[] pdf = pdfService.generateFromHtml(template);
@@ -148,6 +149,8 @@ public class PdfController {
     } else {
       throw new RenderException(HttpStatus.NOT_IMPLEMENTED, "Unknown type of template: " + serviceRequestId);
     }
+
+    params.put("base64Checkbox", resourceService.getImageBase64("checkbox.gif"));
     
     return params;
   }
