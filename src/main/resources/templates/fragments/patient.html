@@ -10,39 +10,29 @@
     <div class="panel-body">
     <table>
         <tr>
-            <td style="width: 20%">Type de patient :</td>
-            <td style="width: 20%" class="right">Nom, prénom :</td>
-            <td style="width: 20%">
-                <b th:text="${patient.name[0].family + ', ' + patient.name[0].given[0]}"></b>
-                <span th:if="${isMother}">(mère)</span>
-            </td>
-            <td style="width: 20%" class="right">Dossier : </td>
+            <td style="width: 30%">Type de patient :</td>
+            <td style="width: 13%">NOM, prénom :</td>
+            <td style="width: 27%"><b th:text="${patient.formattedName}"></b><span th:if="${isMother}">(mère)</span></td>
+            <td style="width: 10%">Dossier :</td>
             <td style="width: 20%"><b th:text="${serviceRequest.dossier + ' | ' + organization.alias[0]}"></b></td>
         </tr>
         <tr>
-            <td>
+            <td rowspan="2">
                 <b class="type" >
                 <span th:text="${type}"></span>
                 <span th:if="${isParent && patient.gender == 'female'}">(mère)</span>
                 <span th:if="${isParent && patient.gender == 'male'}">(père)</span>
                 </b>
             </td>
-            <td class="right">DDN (aaaa-mm-jj) :</td>
-            <td >
-                <b th:text="${patient.birthDate}"></b>
-                <span th:if="${isMother}">(mère)</span>
-            </td>
-            <td class="right">RAMQ :</td>
-            <td><b th:text="${patient.ramq}"></b></td>
+            <td>DDN (aaaa-mm-jj) :</td>
+            <td><b th:text="${patient.birthDate}"></b><span th:if="${isMother}">(mère)</span></td>
+            <td>RAMQ :</td>
+            <td><b th:text="${patient.formattedRamq}"></b></td>
         </tr>
         <tr>
-            <td></td>
-            <td class="right">Sexe:</td>
-            <td>
-                <b th:text="#{${patient.gender}}"></b>
-                <span th:if="${isMother}">(mère)</span>
-            </td>
-            <td class="right"><span th:if="${withFamily}">No de famille :</span></td>
+            <td>Sexe :</td>
+            <td><b th:text="#{${patient.gender} ?: 'unknown'}"></b><span th:if="${isMother}">(mère)</span></td>
+            <td><span th:if="${withFamily}">No de famille : </span></td>
             <td><b th:if="${withFamily}" th:text="${patient.familyId}"></b></td>
         </tr>
     </table>
@@ -51,22 +41,22 @@
             <td colspan="5"><div class="separator"></div></td>
         </tr>
         <tr>
-            <td style="width: 20%" rowspan="3"><b>Informations sur le cas-index</b></td>
-            <td style="width: 20%" class="right">Nom, prénom :</td>
-            <td style="width: 20%"><b th:text="${proband.name[0].family + ', ' + proband.name[0].given[0]}"></b></td>
-            <td style="width: 20%" class="right">Dossier : </td>
+            <td style="width: 30%" rowspan="3"><b>Informations sur le cas-index</b></td>
+            <td style="width: 13%">NOM, prénom :</td>
+            <td style="width: 27%"><b th:text="${proband.formattedName}"></b></td>
+            <td style="width: 10%">Dossier :</td>
             <td style="width: 20%"><b th:text="${proband.dossier + ' | ' + organization.alias[0]}"></b></td>
         </tr>
         <tr>
-            <td class="right">DDN (aaaa-mm-jj) :</td>
-            <td ><b th:text="${proband.birthDate}"></b></td>
-            <td class="right">RAMQ :</td>
-            <td><b th:text="${proband.ramq}"></b></td>
+            <td>DDN (aaaa-mm-jj) :</td>
+            <td><b th:text="${proband.birthDate}"></b></td>
+            <td>RAMQ :</td>
+            <td><b th:text="${proband.formattedRamq}"></b></td>
         </tr>
         <tr>
-            <td class="right">Sexe:</td>
-            <td><b th:text="#{${proband.gender}}"></b></td>
-            <td class="right"></td>
+            <td>Sexe :</td>
+            <td><b th:text="#{${proband.gender} ?: 'unknown'}"></b></td>
+            <td></td>
             <td></td>
         </tr>
     </table>
@@ -75,13 +65,13 @@
             <td colspan="5"><div class="separator"></div></td>
         </tr>
         <tr>
-            <td style="width: 20%" rowspan="2"><b>Informations sur le fetus</b></td>
-            <td style="width: 20%" class="right">Age gestationnel :</td>
-            <td style="width: 60%"></td>
+            <td style="width: 30%" rowspan="2"><b>Informations sur le foetus</b></td>
+            <td style="width: 13%">Age gestationnel :</td>
+            <td style="width: 57%"></td>
         </tr>
         <tr>
-            <td class="right">Sexe:</td>
-            <td><b th:text="#{${fetus.gender}}"></b></td>
+            <td>Sexe :</td>
+            <td><b th:text="#{${fetus.gender} ?: 'unknown'}"></b></td>
         </tr>
     </table>
     </div>

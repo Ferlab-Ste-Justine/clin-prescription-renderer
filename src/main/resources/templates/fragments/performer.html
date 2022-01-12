@@ -6,21 +6,20 @@
     <div th:fragment="performer(performer)">
         <div class="panel">
             <div class="panel-header"><b>À REMPLIR PAR LE CENTRE DE PRÉLÈVEMENT</b></div>
-            <div class="panel-body">
+            <div class="panel-body spaced">
                 Centre de prélèvement : __________________________________________________________________
                 <br/>
-                Prélèvement fait par : _________________________________
+                Prélèvement fait par : _____________________________________________
                 <br/>
-                Date du prélèvement (aaa-mm-jj) : _________________________________
+                Date du prélèvement (aaaa-mm-jj) : _________________________________
                 <br/>
-                Heure de prélèvement (hh:mm): _________________________________
+                Heure du prélèvement (hh:mm) : ____________________________________
             </div>
         </div>
         <div class="panel">
             <div class="panel-header"><b>LABORATOIRE DE DIAGNOSTIC MOLÉCULAIRE ASSIGNÉ À CETTE REQUÊTE</b></div>
             <div class="panel-body">
-                <b th:text="${performer.name}"></b>
-                <br/>
+                <b th:text="${performer.alias[0] + ' : ' + performer.name}"></b>
                 <span th:text="${performer.address}"></span>
                 <br/>
                 Téléphone : <span th:text="${performer.phone}"></span>

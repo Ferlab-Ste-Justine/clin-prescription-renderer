@@ -6,16 +6,16 @@
 <div class="header" th:fragment="header(serviceRequest)">
   <table>
     <tr style="text-align: center">
-      <td colspan="2" class="title"><b>RÉSEAU QUÉBÉCOIS DE DIAGNOSTIC MOLÉCULAIRE</b></td>
+      <td colspan="2" class="title"><b>Réseau québécois de diagnostic moléculaire</b></td>
     </tr>
     <tr style="text-align: center">
-      <td colspan="2">Requête d’analyses de l’exome</td>
+      <td colspan="2">Requête d’analyse de l’exome</td>
     </tr>
     <tr>
       <td colspan="2"><div class="separator"></div></td>
     </tr>
     <tr>
-      <td>Numéro de Prescription : <b th:text="${serviceRequest.id}"></b></td>
+      <td>Numéro de prescription : <b th:text="${serviceRequest.id}"></b></td>
       <td class="right">Date (aaaa-mm-jj) : <b th:text="${#dates.format(serviceRequest.meta.lastUpdated, 'yyyy-MM-dd')}"></b></td>
     </tr>
     <tr>

@@ -1,7 +1,7 @@
 feign:
   client:
     url:
-      fhirServer: ${FHIR_SERVER_URL:http://localhost:8080/fhir/}
+      fhirServer: ${FHIR_SERVER_URL:https://fhir.qa.clin.ferlab.bio/fhir}
     config:
       default:
         connectTimeout: 5000
@@ -9,8 +9,8 @@ feign:
         loggerLevel: basic
 security:
   enabled: ${SECURITY_ENABLED:true}
-  audience: ${SECURITY_AUDIENCE:account}
-  issuer: ${SECURITY_ISSUER:http://localhost:8081/auth/realms/master}
+  audience: ${SECURITY_AUDIENCE:clin-acl}
+  issuer: ${SECURITY_ISSUER:https://auth.qa.clin.ferlab.bio/auth/realms/clin}
   cors:
     - "http://localhost:2000"
     - "https://qa.clin.ferlab.bio"
