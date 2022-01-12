@@ -39,7 +39,7 @@ public class Patient extends AbstractResource {
     for (Extension ext: getExtension()) {
       if (FAMILY_RELATION.equals(ext.getUrl())) {
         Extension motherRelation = getExtension(ext.getExtension(), "relation")
-            .filter(e -> "NMTF".equals(e.getValueCodeableConcept().getCoding().get(0).getCode())).orElse(null);
+            .filter(e -> "NMTHF".equals(e.getValueCodeableConcept().getCoding().get(0).getCode())).orElse(null);
         if(motherRelation != null) {
           id = getExtension(ext.getExtension(), "subject").get().getValueReference().getId();
         }

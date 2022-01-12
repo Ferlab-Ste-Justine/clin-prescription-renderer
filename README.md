@@ -25,4 +25,4 @@ Due to the PDF export there are some limitations and the main rule is to have st
 - em/rem not supported => use px units
 - flexbox not supported => use table structures
 - avoid `<p>` the start/end margin can't be changed, use line-height and `<br/>` instead
- 
+- input checkbox doesn't render well in PDF, has been replaced by a GIF image
