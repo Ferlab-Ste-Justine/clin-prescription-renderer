@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
@@ -48,6 +49,10 @@ public class PdfController {
   @Autowired
   private ResourceService resourceService;
   
+  // thread confinement because SimpleDateFormat not thread-safe
+  private final ThreadLocal<SimpleDateFormat> formatter = ThreadLocal
+      .withInitial(() -> new SimpleDateFormat("yyyyMMdd'T'HHmmss"));
+  
   @RequestMapping("/pdf/{serviceRequestId}")
   public ResponseEntity<org.springframework.core.io.Resource> pdf(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
                                       @RequestParam(required = false) String lang,
@@ -62,9 +67,11 @@ public class PdfController {
     String template = thymeleafService.parseTemplate(params.get(TEMPLATE).toString(), params, locale);
     byte[] pdf = pdfService.generateFromHtml(template);
     ByteArrayResource resource = new ByteArrayResource(pdf);
+    
+    final String fileName = String.format("%s_%s.pdf", serviceRequestId, formatter.get().format(new Date()));
 
     return ResponseEntity.ok()
-        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + serviceRequestId + ".pdf")
+        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName)
         .contentLength(resource.contentLength())
         .contentType(MediaType.APPLICATION_OCTET_STREAM)
         .body(resource);
