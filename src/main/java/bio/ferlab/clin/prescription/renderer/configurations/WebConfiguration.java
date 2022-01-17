@@ -5,6 +5,8 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -41,8 +43,9 @@ public class WebConfiguration implements WebMvcConfigurer {
   public void addCorsMappings(CorsRegistry registry) {
     registry.addMapping("/**")
         .allowedOrigins(securityConfiguration.getCors().toArray(String[]::new))
-        .allowedMethods("GET")
-        .allowedHeaders("Authorization")
+        .allowedMethods(HttpMethod.GET.name())
+        .allowedHeaders(HttpHeaders.AUTHORIZATION)  // request allowed header
+        .exposedHeaders(HttpHeaders.CONTENT_DISPOSITION)  // response allowed header
         .allowCredentials(true)
         .maxAge(3600);
   }
