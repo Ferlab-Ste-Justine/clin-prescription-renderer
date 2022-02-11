@@ -18,7 +18,7 @@ public class Practitioner extends AbstractResource {
   
   public String getFormattedName() {
     return name.stream().findFirst().map(n -> 
-      String.format("%s %s, %s - %s", 
+      String.format("%s %s %s - %s", 
           n.getPrefix().stream().findFirst().orElse(""), 
           n.getFamily().toUpperCase(), 
           n.getGiven().stream().findFirst().orElse(""),

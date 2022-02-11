@@ -25,7 +25,7 @@ public class Patient extends AbstractResource {
 
   public String getFormattedName() {
     return name.stream().filter(n -> n.getFamily() != null && n.getGiven().size() > 0)
-        .findFirst().map(n -> String.format("%s, %s", n.getFamily().toUpperCase(), n.getGiven().get(0))).orElse(null); 
+        .findFirst().map(n -> String.format("%s %s", n.getFamily().toUpperCase(), n.getGiven().get(0))).orElse(null); 
   }
   
   public String getFormattedRamq() {
