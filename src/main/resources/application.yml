@@ -1,7 +1,7 @@
 feign:
   client:
     url:
-      fhirServer: ${FHIR_SERVER_URL:https://fhir.qa.clin.ferlab.bio/fhir}
+      fhirServer: ${FHIR_SERVER_URL:https://fhir.qa.cqgc.hsj.rtss.qc.ca/fhir}
     config:
       default:
         connectTimeout: 5000
@@ -10,9 +10,9 @@ feign:
 security:
   enabled: ${SECURITY_ENABLED:true}
   audience: ${SECURITY_AUDIENCE:clin-acl}
-  issuer: ${SECURITY_ISSUER:https://auth.qa.clin.ferlab.bio/auth/realms/clin}
+  issuer: ${SECURITY_ISSUER:https://auth.qa.cqgc.hsj.rtss.qc.ca/auth/realms/clin}
   cors:
     - "http://localhost:2000"
-    - "https://qa.clin.ferlab.bio"
-    - "https://staging.clin.ferlab.bio"
-    - "https://clin.ferlab.bio"
+    - "https://qa.cqgc.hsj.rtss.qc.ca"
+    - "https://staging.cqgc.hsj.rtss.qc.ca"
+    - "https://cqgc.hsj.rtss.qc.ca"
